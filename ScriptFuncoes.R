@@ -51,7 +51,7 @@ ler = function(caminho){
 }
 
 
-autoVetorN = function(caminho){
+autoVetorNxlsx = function(caminho){
   matrizes = ler(caminho)
   prioridades = lapply(matrizes, function(x) autoVetor(x))
   return(prioridades)
@@ -73,6 +73,44 @@ vetor_prioridades = function(lista){
   return(vetorPrioridades)
 }
 
+##Dar uma revisada
+tabela = function(lista){
+  qtdAutovetores = length(lista)
+  pesoCriterios = lista[qtdAutovetores]
+  pesoAlternativas = lista[1:qtdAutovetores-1]
+  qtdAlternativas = length(pesoAlternativas[[1]])
+  nomeAlternativas = LETTERS[1:qtdAlternativas]
+  tabelaPesoAlternativas = list()
+  
+  for(i in 1:qtdAlternativas){
+    aux = lapply(alternativas,function(x) x[i])
+    tabelaPesoAlternativas[[i]] = unlist(aux)*unlist(pesoCriterios)
+  }
+  names(tabelaPesoAlternativas) = nomeAlternativas
+  tabelaPesoCriterios = list(Pesos = unlist(pesoCriterios))
+  
+  tabelaJunta = tibble::as.tibble(append(tabelaPesoCriterios,tabelaPesoAlternativas))
+  
+  
+  vetorSomaPesos = apply(tabelaJunta, 2, sum)
+  
+  tabelaGeral = rbind(tabelaJunta,c(vetorSomaPesos))
+  
+  tabelaGeral = dplyr::mutate(tabelaGeral, Criterios = c(names(pesoAlternativas),"Total"))
+  
+  return(dplyr::select(tabelaGeral,Criterios,everything()))
+}
+####rascunho
+tabela = tibble( Criterios = names(autovetores[1:(length(autovetores)-1)]), Pesos = autovetores[[length(autovetores)]])
+
+criterios = autovetores[length(autovetores)]
+alternativas = autovetores[1:length(autovetores)-1]
+
+lapply(alternativas[[]][1])
 
 
+A = lapply(alternativas,function(x) x[1])
 
+A = unlist(A)*unlist(criterios)
+
+tabela = dplyr::mutate(tabela, A = A)
