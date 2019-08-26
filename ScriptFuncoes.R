@@ -83,13 +83,13 @@ tabela = function(lista){
   tabelaPesoAlternativas = list()
   
   for(i in 1:qtdAlternativas){
-    aux = lapply(alternativas,function(x) x[i])
+    aux = lapply(pesoAlternativas,function(x) x[i])
     tabelaPesoAlternativas[[i]] = unlist(aux)*unlist(pesoCriterios)
   }
   names(tabelaPesoAlternativas) = nomeAlternativas
   tabelaPesoCriterios = list(Pesos = unlist(pesoCriterios))
   
-  tabelaJunta = tibble::as.tibble(append(tabelaPesoCriterios,tabelaPesoAlternativas))
+  tabelaJunta = tibble::as_tibble(append(tabelaPesoCriterios,tabelaPesoAlternativas))
   
   
   vetorSomaPesos = apply(tabelaJunta, 2, sum)
@@ -98,8 +98,42 @@ tabela = function(lista){
   
   tabelaGeral = dplyr::mutate(tabelaGeral, Criterios = c(names(pesoAlternativas),"Total"))
   
-  return(dplyr::select(tabelaGeral,Criterios,everything()))
+  return(dplyr::select(tabelaGeral,Criterios, dplyr::everything()))
 }
+
+
+ahp1 = function(caminho){
+  matrizes = ler(caminho)
+  autovetores = autoVetorNxlsx(caminho)
+  tabela = tabela(autovetores)
+  cr = unlist(lapply(matrizes,function(x) CR(x)))
+  tabelaGeral = dplyr::mutate(tabela, CR = cr)
+  return(tabelaGeral)  
+}
+
+# library(formattable)
+# 
+# formata_tabela = function(tabela){
+#   limiteInferior = "#DeF7E9"
+#   limiteSuperior = "#71CA97"
+#   numero_linhas = dim(tabela)[1]
+#   numero_colunas = dim(tabela)[2]
+#   maior_alternativa = max(tabela[numero_linhas,3:(numero_colunas-1)])
+#   
+#   formata_maior_alternativa = formatter("span", 
+#                                         style = x ~ style("font-weight" = ifelse(x == maior_alternativa, "bold", NA)))
+#   
+#   tabela_formatada = formattable(tabela,
+#                        align = c("l", rep("c", numero_colunas - 1)),
+#                        list(area(row = 1:numero_linhas, col = 2:numero_colunas) ~ percent
+#                             `Pesos` = color_tile(limiteInferior, limiteSuperior),
+#                             area(row = numero_linhas, col = 3:(3+numero_colunas-4)) ~ formata_maior_alternativa
+#                            ))
+#                             
+#   #tabela_formatada = dplyr::mutate_if(tabela_formatada, is.numeric, function(x) paste0(round(100*x,2),"%"))
+#   return(tabela_formatada)
+# }
+
 ####rascunho
 tabela = tibble( Criterios = names(autovetores[1:(length(autovetores)-1)]), Pesos = autovetores[[length(autovetores)]])
 
