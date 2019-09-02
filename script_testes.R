@@ -18,7 +18,6 @@ formata_tabela = function(tabela){
   
   formato = function(cor1,cor2){formatter(.tag = "span",
                                           style =function(x)style("background-color" =csscolor(gradient(as.numeric(unlist(lapply(x,function(x) gsub("%","",x)))), cor1, cor2)),
-                                                                  "font-weight" = ifelse(as.numeric(unlist(lapply(x,function(x) gsub("%","",x))))==100,"bold",NA),
                                                                   "border-radius" = "4px",
                                                                   display = "block"))
   }
@@ -26,6 +25,10 @@ formata_tabela = function(tabela){
   formata_maior_alternativa = formatter("span",
                                         style = x ~ style("font-weight" = ifelse(as.numeric(unlist(lapply(x,function(x) gsub("%","",x)))) == maior_alternativa, "bold", NA)))
   
+  formato_CR = formatter(.tag = "span",
+                         style =function(x)style("background-color" =ifelse(as.numeric(unlist(lapply(x,function(x) gsub("%","",x)))) >= 5,"#FFC5C5","#B0FFD5"),
+                                                 "border-radius" = "4px",
+                                                 display = "block"))
     
   tabela_formatada = formattable(tabela_porcento,
                                                align = c("l",rep("r", numero_colunas - 1)),
@@ -33,7 +36,7 @@ formata_tabela = function(tabela){
                                                  "Criterios" = formatter("span", style = ~ style(color = "grey",font.weight = "bold")),
                                                  area(row = 1:(numero_linhas-1), col = 2) ~ formato(limiteInferiorCriterios,limiteSuperiorCriterios),
                                                  area(row = 1:(numero_linhas-1), col = 3:(numero_colunas-1)) ~ formato(limiteInferiorAlternativas,limiteSuperiorAlternativas),
-                                                 area(row = 1:(numero_linhas-1), col = numero_colunas) ~ formato(limiteInferiorCR,limiteSuperiorCR),
+                                                 area(col = numero_colunas) ~ formato_CR,
                                                  area(row = numero_linhas, col = (3:numero_colunas-1)) ~ formata_maior_alternativa
                                                  
                                                  )

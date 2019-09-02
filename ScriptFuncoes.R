@@ -96,7 +96,7 @@ tabela = function(lista){
   
   tabelaGeral = rbind(tabelaJunta,c(vetorSomaPesos))
   
-  tabelaGeral = dplyr::mutate(tabelaGeral, Criterios = c(names(pesoAlternativas),"Total"))
+  tabelaGeral = dplyr::mutate(tabelaGeral, Criterios = c(names(lista)))
   
   return(dplyr::select(tabelaGeral,Criterios, dplyr::everything()))
 }
