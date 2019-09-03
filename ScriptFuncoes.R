@@ -1,5 +1,3 @@
-matriz = matrix(c(1,2,1/2,1/7,1/2,1,1/5,1/9,2,5,1,1/5,7,9,5,1),ncol = 4)
-
 autoVetor = function(matriz){
   
   #Achando o autovetor associado ao maior autovalor
@@ -74,12 +72,13 @@ vetor_prioridades = function(lista){
 }
 
 ##Dar uma revisada
-tabela = function(lista){
+tabela = function(lista, alternativas = "PADRAO"){
   qtdAutovetores = length(lista)
   pesoCriterios = lista[qtdAutovetores]
   pesoAlternativas = lista[1:qtdAutovetores-1]
   qtdAlternativas = length(pesoAlternativas[[1]])
-  nomeAlternativas = LETTERS[1:qtdAlternativas]
+  if(alternativas[1] == "PADRAO") nomeAlternativas = LETTERS[1:qtdAlternativas]
+  else nomeAlternativas = alternativas
   tabelaPesoAlternativas = list()
   
   for(i in 1:qtdAlternativas){
@@ -102,10 +101,10 @@ tabela = function(lista){
 }
 
 
-ahp1 = function(caminho){
+ahp1 = function(caminho,alternativas = "PADRAO"){
   matrizes = ler(caminho)
   autovetores = autoVetorNxlsx(caminho)
-  tabela = tabela(autovetores)
+  tabela = tabela(autovetores,alternativas)
   cr = unlist(lapply(matrizes,function(x) CR(x)))
   tabelaGeral = dplyr::mutate(tabela, CR = cr)
   return(tabelaGeral)  
