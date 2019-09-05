@@ -1,17 +1,17 @@
 autoVetor = function(matriz){
-  
+
   #Achando o autovetor associado ao maior autovalor
   autoValores = Re(eigen(matriz)$values)
   autoVetores = Re(eigen(matriz)$vectors)
   autoValorMax = which.max(autoValores)
   autoVetorAssociado = autoVetores[,autoValorMax]
   #
-  
+
   autoVetorNormalizado = autoVetorAssociado/sum(autoVetorAssociado)
-  
+
   return(autoVetorNormalizado)
-  
-  
+
+
 }
 
 CR = function(matriz){
@@ -21,7 +21,7 @@ CR = function(matriz){
   tamanhoMatriz = length(matriz[1,])
   IndiceConsistencia = abs(autoValorMax - tamanhoMatriz) / (tamanhoMatriz - 1)
   consistenciaAleatoria = c(0,0,0.52,0.89,1.11,1.25,1.35,1.40,1.45,1.49,1.51,1.54,1.56,1.57,1.58)
-  
+
   return(IndiceConsistencia/consistenciaAleatoria[tamanhoMatriz])
 }
 
@@ -49,15 +49,14 @@ ler = function(caminho){
 }
 
 
-autoVetorNxlsx = function(caminho){
-  matrizes = ler(caminho)
-  prioridades = lapply(matrizes, function(x) autoVetor(x))
+autoVetorN = function(lista){
+  prioridades = lapply(lista, function(x) autoVetor(x))
   return(prioridades)
 }
 
 
 vetor_prioridades = function(lista){
-  vetorPrioridades = c() 
+  vetorPrioridades = c()
   focoPrincipal = lista[[length(lista)]]
   qtdAlternativas = length(lista[[1]])
   qtdFocoPrincipal = length(focoPrincipal)
@@ -80,70 +79,57 @@ tabela = function(lista, alternativas = "PADRAO"){
   if(alternativas[1] == "PADRAO") nomeAlternativas = LETTERS[1:qtdAlternativas]
   else nomeAlternativas = alternativas
   tabelaPesoAlternativas = list()
-  
+
   for(i in 1:qtdAlternativas){
     aux = lapply(pesoAlternativas,function(x) x[i])
     tabelaPesoAlternativas[[i]] = unlist(aux)*unlist(pesoCriterios)
   }
   names(tabelaPesoAlternativas) = nomeAlternativas
   tabelaPesoCriterios = list(Pesos = unlist(pesoCriterios))
-  
+
   tabelaJunta = tibble::as_tibble(append(tabelaPesoCriterios,tabelaPesoAlternativas))
-  
-  
+
+
   vetorSomaPesos = apply(tabelaJunta, 2, sum)
-  
+
   tabelaGeral = rbind(tabelaJunta,c(vetorSomaPesos))
-  
+
   tabelaGeral = dplyr::mutate(tabelaGeral, Criterios = c(names(lista)))
-  
+
   return(dplyr::select(tabelaGeral,Criterios, dplyr::everything()))
 }
 
 
 ahp1 = function(caminho,alternativas = "PADRAO"){
-  matrizes = ler(caminho)
-  autovetores = autoVetorNxlsx(caminho)
+  if(class(caminho) == "list") matrizes = caminho
+  if(class(caminho) == "character") matrizes = ler(caminho)
+  autovetores = autoVetorN(matrizes)
   tabela = tabela(autovetores,alternativas)
   cr = unlist(lapply(matrizes,function(x) CR(x)))
   tabelaGeral = dplyr::mutate(tabela, CR = cr)
-  return(tabelaGeral)  
+  return(tabelaGeral)
 }
 
-# library(formattable)
-# 
-# formata_tabela = function(tabela){
-#   limiteInferior = "#DeF7E9"
-#   limiteSuperior = "#71CA97"
-#   numero_linhas = dim(tabela)[1]
-#   numero_colunas = dim(tabela)[2]
-#   maior_alternativa = max(tabela[numero_linhas,3:(numero_colunas-1)])
-#   
-#   formata_maior_alternativa = formatter("span", 
-#                                         style = x ~ style("font-weight" = ifelse(x == maior_alternativa, "bold", NA)))
-#   
-#   tabela_formatada = formattable(tabela,
-#                        align = c("l", rep("c", numero_colunas - 1)),
-#                        list(area(row = 1:numero_linhas, col = 2:numero_colunas) ~ percent
-#                             `Pesos` = color_tile(limiteInferior, limiteSuperior),
-#                             area(row = numero_linhas, col = 3:(3+numero_colunas-4)) ~ formata_maior_alternativa
-#                            ))
-#                             
-#   #tabela_formatada = dplyr::mutate_if(tabela_formatada, is.numeric, function(x) paste0(round(100*x,2),"%"))
-#   return(tabela_formatada)
-# }
 
-####rascunho
-tabela = tibble( Criterios = names(autovetores[1:(length(autovetores)-1)]), Pesos = autovetores[[length(autovetores)]])
-
-criterios = autovetores[length(autovetores)]
-alternativas = autovetores[1:length(autovetores)-1]
-
-lapply(alternativas[[]][1])
-
-
-A = lapply(alternativas,function(x) x[1])
-
-A = unlist(A)*unlist(criterios)
-
-tabela = dplyr::mutate(tabela, A = A)
+#'AHP excel
+#'
+#'Aplica AHP em um grupo de matrizes devidamente formatadas em um arquivo excel.
+#'
+#'@param caminho e uma string do caminho do arquivo excel ou uma lista com as matrizes
+#'@param alternativas espera um vetor com os nomes das alternativas a serem estudadas.
+#'Se "PADRAO" ira preencher o nome das alternativas com letras de A:Z
+#'@param cores altera as cores do fundo das celulas da tabela. pode ser usados
+#'"PADRAO", "CINZA", "BRANCO"
+#'
+#'@return tabela formatada para visualizacao
+#'
+#'@import formattable
+#'@import dplyr
+#'@import tibble
+#'
+#'@export
+aplica_ahp = function(caminho, alternativas = "PADRAO", cores = "PADRAO"){
+  tabela = ahp1(caminho,alternativas)
+  tabela = formata_tabela(tabela,cores)
+  return(tabela)
+}
