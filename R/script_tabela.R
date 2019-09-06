@@ -17,7 +17,7 @@ formata_tabela = function(tabela, cores = "PADRAO"){
     limiteSuperiorCriterios = "#71CA97"
     limiteInferiorAlternativas = "#B6D4FF"
     limiteSuperiorAlternativas = "#0060D3"
-    limiteInferiorCR = "#FFC5C5"
+    limiteInferiorCR = "#ff7f7f"
     limiteSuperiorCR = "#B0FFD5"
     cor_letra = "black"
   }
