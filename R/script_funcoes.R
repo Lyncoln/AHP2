@@ -26,17 +26,27 @@ CR = function(matriz){
 }
 
 
-matrizJulgamento = function(qtd,CR = TRUE){
-  matriz = diag(1, qtd ,qtd)
-  for (i in 1:(qtd-1)){
-    for(j in (i+1):(qtd)){
-    valor = eval(parse(text = (readline(paste0("Qual é a importância do critério ",as.character(i)," em relação ao critério ",as.character(j),": ")))))
-    matriz[i,j] = valor
-    matriz[j,i] = 1/valor
+matrizJulgamento = function(qtd_comparacoes,CR = TRUE, qtd_matrizes = 1){
+  matrizes = list()
+  erros = c()
+  conjunto = list()
+  for(k in 1:qtd_matrizes){
+  if(qtd_matrizes != 1) print(paste0("Preencha a matriz ",as.character(k)))
+  matriz = diag(1, qtd_comparacoes ,qtd_comparacoes)
+    for (i in 1:(qtd_comparacoes-1)){
+      for(j in (i+1):(qtd_comparacoes)){
+      valor = eval(parse(text = (readline(paste0("Qual é a importância do critério ",as.character(i)," em relação ao critério ",as.character(j),": ")))))
+      matriz[i,j] = valor
+      matriz[j,i] = 1/valor
+      }
     }
+    matrizes[[k]] = matriz
+    if(CR == TRUE) erros[k] = CR(matriz)
   }
-  if(CR == TRUE)return(list(Matriz = matriz,CR = round(CR(matriz),3)))
-  else return(matriz)
+
+  conjunto[[1]] = matrizes; names(conjunto) = "Matriz"
+  if(CR == TRUE) {conjunto[[2]] = erros; names(conjunto) = c("Matriz","CR")}
+  return(conjunto)
 }
 
 

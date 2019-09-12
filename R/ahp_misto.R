@@ -1,10 +1,13 @@
 #BD5 = ler("banco_de_dados//BD5.xlsx")
 
-ahp = function(base,mapeamento){
+ahp = function(base,mapeamento,nomes_alternativas){
+
   preferencias = autoVetorN(base); preferencias
   objetivo = preferencias[1]; objetivo
   criterios = preferencias[2:(length(mapeamento)+1)]; criterios
   alternativas = preferencias[(length(mapeamento) + 2):length(preferencias)]; alternativas
+  matriz_criterios = base[2:(length(mapeamento)+1)]
+  matriz_alternativas = base[(length(mapeamento) + 2):length(base)]
 
   #normalizando
 
@@ -17,12 +20,15 @@ ahp = function(base,mapeamento){
   #Gerando nomes para a tabela
 
   nomes = c(paste0("---",names(objetivo)))
+  CR_saaty = c(CR(base[[1]]))
   aux = 1 # Me ajuda a me guiar pelas matrizes de subcriterios
   for(i in 1:length(mapeamento)){
     nomes = append(nomes, paste0("--",names(criterios[i])))
+    CR_saaty = c(CR_saaty, CR(matriz_criterios[[i]]))
     for(j in 1:mapeamento[i]){
       if(mapeamento[i] == 0) break
       nomes = append(nomes, paste0("-",names(alternativas[aux])))
+      CR_saaty = c(CR_saaty, CR(matriz_alternativas[[aux]]))
       aux = aux + 1
     }
   }
@@ -44,7 +50,7 @@ ahp = function(base,mapeamento){
 
   #testando primeira parte
   tabela = tibble(Criterios = nomes, Pesos = pesos)
-  tabela
+  #tabela
 
 
   #Aqui estou organizando a proporção de cada criterio por alternativas
@@ -54,7 +60,8 @@ ahp = function(base,mapeamento){
   for(i in 1:qtd_alternativas){
     pesos_alternativas[[i]] = 0
   }
-  names(pesos_alternativas) = LETTERS[1:qtd_alternativas]
+  #names(pesos_alternativas) = LETTERS[1:qtd_alternativas]
+  names(pesos_alternativas) = nomes_alternativas
   pesos_alternativas
 
 
@@ -126,8 +133,23 @@ ahp = function(base,mapeamento){
 
   pesos_alternativas_organizados
 
-  CR_saaty = unlist(lapply(base, function(x) return(CR(x))),use.names = F); CR_saaty
+  #CR_saaty = unlist(lapply(base, function(x) return(CR(x))),use.names = F); CR_saaty
   tabela = append(tabela,pesos_alternativas_organizados)
   tabela = append(tabela, list("CR"= CR_saaty))
-  return(as_tibble(tabela))
+  return(dplyr::as_tibble(tabela))
+}
+ahp_geral = function(objeto, mapeamento, nomes_alternativas = "PADRAO"){
+  if(class(objeto) == "character") base = ler(objeto)
+  else base = objeto
+  if(nomes_alternativas[[1]] == "PADRAO") nomes_alternativas = LETTERS[1:length(base[[length(base)]][[1]])]
+  tabela = ahp(base, mapeamento,nomes_alternativas)
+
+  return(tabela)
+}
+
+ranque = function(tabela){
+  num_colunas = length(tabela[1,])
+  nun_linhas = length(tabela[,1])
+  alternativas = tabela[1,3:(num_colunas-1)]
+  return(dplyr::select(dplyr::mutate(dplyr::arrange(tidyr::gather(alternativas,Alternativas,Pesos),desc(Pesos)),Ranque = c(1:length(alternativas[1,]))),Ranque,dplyr::everything()))
 }
