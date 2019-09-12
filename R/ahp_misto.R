@@ -102,25 +102,31 @@ for( i in 1:qtd_alternativas){
   inferior = 2
   superior = 0
   pesos_alternativas_organizados[[i]] = c(sum(pesos_alternativas_organizados[[i]]), pesos_alternativas_organizados[[i]])
-  print(names(pesos_alternativas[i]))
-  print(pesos_alternativas_organizados[[i]])
+  #print(names(pesos_alternativas[i]))
+  vetor = c(pesos_alternativas_organizados[[i]][1])
+  #print(pesos_alternativas_organizados[[i]])
   for(j in 1:length(mapeamento)){
     if(mapeamento[j] == 0 ) {
+      vetor = c(vetor, pesos_alternativas_organizados[[i]][inferior])
       inferior = inferior + 1
     }
     else{
       superior = inferior + mapeamento[j] - 1
-      print("----")
-      print(pesos_alternativas_organizados[[i]][inferior:superior])
+      #print("----")
+      #print(pesos_alternativas_organizados[[i]][inferior:superior])
       valor = sum(pesos_alternativas_organizados[[i]][inferior:superior])
-      print(valor)
-      print("----")
+      vetor = c(vetor, valor, pesos_alternativas_organizados[[i]][inferior:superior])
+      #print(valor)
+      #print("----")
       inferior = superior + 1
     }
 
   }
+  pesos_alternativas_organizados[[i]] = vetor
 }
 
 pesos_alternativas_organizados
 
 
+tabela = append(tabela,pesos_alternativas_organizados)
+as_tibble(tabela)
