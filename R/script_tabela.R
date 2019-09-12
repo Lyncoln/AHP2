@@ -3,9 +3,9 @@ transforma_tabela = function(tabela){
   numero_colunas = dim(tabela)[2]
 
   tabela_porcento = dplyr::mutate_if(tabela, is.numeric, function(x) paste0(round(100*x,2),"%"))
-  tabela_porcento = dplyr::slice(tabela_porcento, numero_linhas, 1:(numero_linhas - 1))
-  nomes_criterios = c(tabela_porcento$Criterios[1], unlist(lapply(tabela_porcento$Criterios[2:numero_linhas],function(x) paste0("-  ",x))))
-  tabela_porcento = dplyr::mutate(tabela_porcento, Criterios = nomes_criterios)
+  #tabela_porcento = dplyr::slice(tabela_porcento, numero_linhas, 1:(numero_linhas - 1))
+  #nomes_criterios = c(tabela_porcento$Criterios[1], unlist(lapply(tabela_porcento$Criterios[2:numero_linhas],function(x) paste0("-  ",x))))
+  #tabela_porcento = dplyr::mutate(tabela_porcento)
 
   return(tabela_porcento)
 
@@ -46,7 +46,7 @@ formata_tabela = function(tabela, cores = "PADRAO"){
 
 
   tabela_porcento = transforma_tabela(tabela)
-  maior_alternativa = round(max(100*as.numeric(unlist(lapply(tabela[numero_linhas,3:(numero_colunas-1)],function(x) gsub("%","",x))))),2)
+  maior_alternativa = round(max(100*as.numeric(unlist(lapply(tabela[1,3:(numero_colunas-1)],function(x) gsub("%","",x))))),2)
 
   formato = function(cor1,cor2){formattable::formatter(.tag = "span",
                                           style =function(x)style("background-color" =csscolor(gradient(as.numeric(unlist(lapply(x,function(x) gsub("%","",x)))), cor1, cor2)),
