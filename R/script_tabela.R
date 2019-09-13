@@ -49,18 +49,18 @@ formata_tabela = function(tabela, cores = "PADRAO"){
   maior_alternativa = round(max(100*as.numeric(unlist(lapply(tabela[1,3:(numero_colunas-1)],function(x) gsub("%","",x))))),2)
 
   formato = function(cor1,cor2){formattable::formatter(.tag = "span",
-                                          style =function(x)style("background-color" =csscolor(gradient(as.numeric(unlist(lapply(x,function(x) gsub("%","",x)))), cor1, cor2)),
+                                          style =function(x)formattable::style("background-color" =formattable::csscolor(formattable::gradient(as.numeric(unlist(lapply(x,function(x) gsub("%","",x)))), cor1, cor2)),
                                                                   "border-radius" = "4px",
                                                                   "color" = cor_letra,
                                                                   display = "block"))
   }
 
   formata_maior_alternativa = formattable::formatter("span",
-                                        style = x ~ style("font-weight" = ifelse(as.numeric(unlist(lapply(x,function(x) gsub("%","",x)))) == maior_alternativa, "bold", NA),
+                                        style = x ~ formattable::style("font-weight" = ifelse(as.numeric(unlist(lapply(x,function(x) gsub("%","",x)))) == maior_alternativa, "bold", NA),
                                                           "font-size" = ifelse(as.numeric(unlist(lapply(x,function(x) gsub("%","",x)))) == maior_alternativa, "130%", NA)))
 
   formato_CR = formattable::formatter(.tag = "span",
-                         style =function(x)style("background-color" =ifelse(as.numeric(unlist(lapply(x,function(x) gsub("%","",x)))) >= 10,limiteInferiorCR,limiteSuperiorCR),
+                         style =function(x)formattable::style("background-color" =ifelse(as.numeric(unlist(lapply(x,function(x) gsub("%","",x)))) >= 10,limiteInferiorCR,limiteSuperiorCR),
                                                  "border-radius" = "4px",
                                                  "color" = cor_letra,
                                                  display = "block"))
@@ -68,11 +68,11 @@ formata_tabela = function(tabela, cores = "PADRAO"){
   tabela_formatada = formattable::formattable(tabela_porcento,
                                                align = c("l",rep("c", numero_colunas - 1)),
                                                list(
-                                                 "Criterios" = formatter("span", style = ~ style(color = "grey",font.weight = "bold")),
-                                                 area(row = 2:(numero_linhas), col = 2) ~ formato(limiteInferiorCriterios,limiteSuperiorCriterios),
-                                                 area(row = 2:(numero_linhas), col = 3:(numero_colunas-1)) ~ formato(limiteInferiorAlternativas,limiteSuperiorAlternativas),
-                                                 area(col = numero_colunas) ~ formato_CR,
-                                                 area(row = 1, col = (3:numero_colunas-1)) ~ formata_maior_alternativa
+                                                 "Criterios" = formattable::formatter("span", style = ~ formattable::style(color = "grey",font.weight = "bold")),
+                                                 formattable::area(row = 2:(numero_linhas), col = 2) ~ formato(limiteInferiorCriterios,limiteSuperiorCriterios),
+                                                 formattable::area(row = 2:(numero_linhas), col = 3:(numero_colunas-1)) ~ formato(limiteInferiorAlternativas,limiteSuperiorAlternativas),
+                                                 formattable::area(col = numero_colunas) ~ formato_CR,
+                                                 formattable::area(row = 1, col = (3:numero_colunas-1)) ~ formata_maior_alternativa
 
                                                  )
 
