@@ -138,6 +138,29 @@ ahp = function(base,mapeamento,nomes_alternativas){
   tabela = append(tabela, list("CR"= CR_saaty))
   return(dplyr::as_tibble(tabela))
 }
+
+#'ahp_geral
+#'
+#'Realiza o calculo da AHP em uma lista de matrizes pareadas ou em um
+#'endereco de planilhas do excel devidamente formatados.
+#'
+#'@param objeto Lista de matrizes pareadas ou caminho do excel contendo as
+#'matrizes pareadas devidamente formatadas.
+#'
+#'@param mapeamento Vetor contendo a quantidade de subcriterios de cada criterio
+#'da sua hierarquia, da esquerda para direita. Se nao preenchido o padrao
+#'e preencher com 0.
+#'
+#'@param nome_alternativas Vetor contendo os nomes das alternativas da sua hierarquia,
+#'se nao preenchido retorna um vetor de LETTERS[1:qtdAlternativas]
+#'
+#'@return Tabela contendo as relacoes dos criterios, subcriterios (Se houver) e Alternativas
+#'Utilizando o metodo AHP.
+#'
+#'@export
+#'
+#'
+
 ahp_geral = function(objeto, mapeamento = "PADRAO", nomes_alternativas = "PADRAO"){
   if(class(objeto) == "character") base = ler(objeto)
   else base = objeto
@@ -148,6 +171,19 @@ ahp_geral = function(objeto, mapeamento = "PADRAO", nomes_alternativas = "PADRAO
   return(tabela)
 }
 
+#'Ranque
+#'
+#'Cria o ranque de alternativas em ordem crescente de uma tabela AHP
+#'criada pela funcao ahp_geral()
+#'
+#'@param tabela tabela AHP criada pela cuncao ahp_geral()
+#'
+#'@return Ranque das alternativas em ordem crescente
+#'
+#'@import dplyr
+#'@import tidyr
+#'
+#'@export
 ranque = function(tabela){
   num_colunas = length(tabela[1,])
   nun_linhas = length(tabela[,1])
