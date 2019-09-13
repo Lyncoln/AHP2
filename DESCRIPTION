@@ -6,7 +6,7 @@ Authors@R:
            family = "Oliveira",
            role = c("aut", "cre"),
            email = "lyncolnsousa@id.uff.br")
-Description: Aplica o método AHP de saaty em um conjunto de matrizes devidamente formatadas no excel.
+Description: Aplica o metodo AHP de saaty em um conjunto de matrizes devidamente formatadas no excel.
 License: What license it uses
 Encoding: UTF-8
 LazyData: true
