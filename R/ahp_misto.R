@@ -2,7 +2,7 @@
 
 ahp = function(base,mapeamento,nomes_alternativas){
 
-  preferencias = autoVetorN(base); preferencias
+  preferencias = calcula_prioridades(base); preferencias
   objetivo = preferencias[1]; objetivo
   criterios = preferencias[2:(length(mapeamento)+1)]; criterios
   alternativas = preferencias[(length(mapeamento) + 2):length(preferencias)]; alternativas
@@ -138,9 +138,10 @@ ahp = function(base,mapeamento,nomes_alternativas){
   tabela = append(tabela, list("CR"= CR_saaty))
   return(dplyr::as_tibble(tabela))
 }
-ahp_geral = function(objeto, mapeamento, nomes_alternativas = "PADRAO"){
+ahp_geral = function(objeto, mapeamento = "PADRAO", nomes_alternativas = "PADRAO"){
   if(class(objeto) == "character") base = ler(objeto)
   else base = objeto
+  if(mapeamento[1] == "PADRAO") mapeamento = rep(0,length(base[[1]]))
   if(nomes_alternativas[[1]] == "PADRAO") nomes_alternativas = LETTERS[1:length(base[[length(base)]][[1]])]
   tabela = ahp(base, mapeamento,nomes_alternativas)
 

@@ -60,7 +60,7 @@ ler = function(caminho){
 }
 
 
-autoVetorN = function(lista){
+calcula_prioridades = function(lista){
   prioridades = lapply(lista, function(x) autoVetor(x))
   return(prioridades)
 }
@@ -114,7 +114,7 @@ autoVetorN = function(lista){
 # ahp1 = function(caminho,alternativas = "PADRAO"){
 #   if(class(caminho) == "list") matrizes = caminho
 #   if(class(caminho) == "character") matrizes = ler(caminho)
-#   autovetores = autoVetorN(matrizes)
+#   autovetores = calcula_prioridades(matrizes)
 #   tabela = tabela(autovetores,alternativas)
 #   cr = unlist(lapply(matrizes,function(x) CR(x)))
 #   tabelaGeral = dplyr::mutate(tabela, CR = cr)
@@ -137,10 +137,10 @@ autoVetorN = function(lista){
 #' #'@import formattable
 #' #'@import dplyr
 #' #'@import tibble
-#' #'
-#' #'@export
-#' aplica_ahp = function(caminho, alternativas = "PADRAO", cores = "PADRAO"){
-#'   tabela = ahp1(caminho,alternativas)
+#'
+#' aplica_ahp = tion(caminho, alternativas = "PADRAO", cores = "PADRAO"){
+#'   tabela
+#' aplica_ahp = = ahp1(caminho,alternativas)
 #'   tabela = formata_tabela(tabela,cores)
 #'   return(tabela)
 #' }
