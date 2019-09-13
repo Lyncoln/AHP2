@@ -38,9 +38,7 @@ CR = function(matriz){
 #'Cria matrizes pareadas e pode testar taxa de consistencia de saaty
 #'
 #'@param qtd_comparacoes Quantida de elementos para serem avaliados
-#'
 #'@param CR Se TRUE retorna tambem a taxa de consistencia de saaty, se FALSE retorna apenas matriz
-#'
 #'@param qtd_matrizes Quantidade de matrizes a serem criadas
 #'
 #'@return Retorna uma lista com 2 posicoes. Primeira posicao contem as matrizes pareadas e a segunda posicao as suas taxas de consistencia

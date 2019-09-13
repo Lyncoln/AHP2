@@ -146,11 +146,9 @@ ahp = function(base,mapeamento,nomes_alternativas){
 #'
 #'@param objeto Lista de matrizes pareadas ou caminho do excel contendo as
 #'matrizes pareadas devidamente formatadas.
-#'
 #'@param mapeamento Vetor contendo a quantidade de subcriterios de cada criterio
 #'da sua hierarquia, da esquerda para direita. Se nao preenchido o padrao
 #'e preencher com 0.
-#'
 #'@param nome_alternativas Vetor contendo os nomes das alternativas da sua hierarquia,
 #'se nao preenchido retorna um vetor de LETTERS[1:qtdAlternativas]
 #'

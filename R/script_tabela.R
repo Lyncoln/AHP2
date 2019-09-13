@@ -15,7 +15,6 @@ transforma_tabela = function(tabela){
 #'Formata uma tabela AHP criada pela funcao ahp_geral()
 #'
 #'@param tabela Tabela AHP criada pela funcao ahp_geral()
-#'
 #'@param cores Padrao de cores para formatar a tabela. Se "PADRAO" retorna o padrao de cores (verde, azul, verde ou azul); se "CINZA" retorna o padrao de cores de cinza;
 #'se "BRANCO" retorna a tabela sem cores
 #'
