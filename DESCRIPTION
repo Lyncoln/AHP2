@@ -15,4 +15,5 @@ Imports:
     formattable,
     dplyr,
     tibble,
-    readxl
+    readxl,
+    tidyr

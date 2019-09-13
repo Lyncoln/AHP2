@@ -10,7 +10,21 @@ transforma_tabela = function(tabela){
   return(tabela_porcento)
 
 }
-
+#'formata_tabela
+#'
+#'Formata uma tabela AHP criada pela funcao ahp_geral()
+#'
+#'@param tabela Tabela AHP criada pela funcao ahp_geral()
+#'
+#'@param cores Padrao de cores para formatar a tabela. Se "PADRAO" retorna o padrao de cores (verde, azul, verde ou azul); se "CINZA" retorna o padrao de cores de cinza;
+#'se "BRANCO" retorna a tabela sem cores
+#'
+#'@return Retorna uma tabela formatada com cores defundo responsivas as quantidades de prioridade dos elementos
+#'
+#'@import formattable
+#'
+#'@export
+#'
 formata_tabela = function(tabela, cores = "PADRAO"){
   if(cores[1] == "PADRAO"){ #Cores escolhidas utilizando a regra de harmonia de cores triade
     limiteInferiorCriterios = "#DeF7E9"

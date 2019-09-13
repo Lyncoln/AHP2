@@ -13,7 +13,15 @@ autoVetor = function(matriz){
 
 
 }
-
+#'CR
+#'
+#'Calcula a taxa de consistencia de saaty para uma matriz pareada
+#'
+#'@param Matriz pareada
+#'
+#'@return Taxa de consistencia de saaty
+#'
+#'@export
 CR = function(matriz){
   autoValores = Re(eigen(matriz)$values)
   autoVetores = Re(eigen(matriz)$vectors)
@@ -25,8 +33,21 @@ CR = function(matriz){
   return(IndiceConsistencia/consistenciaAleatoria[tamanhoMatriz])
 }
 
+#'matriz_julgamento
+#'
+#'Cria matrizes pareadas e pode testar taxa de consistencia de saaty
+#'
+#'@param qtd_comparacoes Quantida de elementos para serem avaliados
+#'
+#'@param CR Se TRUE retorna tambem a taxa de consistencia de saaty, se FALSE retorna apenas matriz
+#'
+#'@param qtd_matrizes Quantidade de matrizes a serem criadas
+#'
+#'@return Retorna uma lista com 2 posicoes. Primeira posicao contem as matrizes pareadas e a segunda posicao as suas taxas de consistencia
+#'
+#'@export
 
-matrizJulgamento = function(qtd_comparacoes,CR = TRUE, qtd_matrizes = 1){
+matriz_julgamento = function(qtd_comparacoes,CR = TRUE, qtd_matrizes = 1){
   matrizes = list()
   erros = c()
   conjunto = list()
@@ -50,7 +71,18 @@ matrizJulgamento = function(qtd_comparacoes,CR = TRUE, qtd_matrizes = 1){
 }
 
 
-library(readxl);library(tibble)
+
+#'ler
+#'
+#'Le um arquivo do excel contendo as matrizes pareadas e transforma todas suas planilhas em uma lista de matrizes no R
+#'
+#'@param caminho Endereco para um arquivo excel que contem as planilhas
+#'
+#'@return Retorna uma lista contendo as matrizes pareadas do arquivo excel
+#'
+#'@import readxl
+#'
+#'@export
 
 ler = function(caminho){
   planilhas = readxl::excel_sheets(caminho)
@@ -59,6 +91,15 @@ ler = function(caminho){
   return(matrizes)
 }
 
+#'calcula_prioridades
+#'
+#'Calcula o vetor de prioridades de uma matriz pareada
+#'
+#'@param lista Lista de matrizes pareadas
+#'
+#'@return Retorna uma lista contendo vetores de prioridades para cada matriz na lista lida
+#'
+#'@export
 
 calcula_prioridades = function(lista){
   prioridades = lapply(lista, function(x) autoVetor(x))
