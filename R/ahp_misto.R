@@ -148,7 +148,7 @@ ahp = function(base,mapeamento,nomes_alternativas){
 #'matrizes pareadas devidamente formatadas.
 #'@param mapeamento Vetor contendo a quantidade de subcriterios de cada criterio
 #'da sua hierarquia, da esquerda para direita. Se nao preenchido o padrao
-#'e preencher com 0.
+#'e preencher com 0. Em caso de duvida, veja a vignette tutorial.
 #'@param nome_alternativas Vetor contendo os nomes das alternativas da sua hierarquia,
 #'se nao preenchido retorna um vetor de LETTERS[1:qtdAlternativas]
 #'

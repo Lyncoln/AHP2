@@ -42,7 +42,8 @@ Lista de matrizes de julgamentos com subcriterios para um exemplo de escolha de 
 de servicos para uma empresa. Os criterios adotados sao: financeiro com subcriterios tempo de retorno, indice
 de lucratividade e Valor presente; Estrategico com subcriterios melhorar processos, melhorar reputacao e
 reducao de riscos; Tecnologico com subcriterios capacidade do time, compatibilidade e custo total de prioridade.
-Para utilizacao na funcao ahp_geral, o argumento mapeamento deve ser preenchido como c(3,3,3), veja a vignette
+Para utilizacao na funcao ahp_geral, o argumento mapeamento deve ser preenchido como c(3,3,3). Em caso de duvida,
+veja a vignette tutorial.
 tutorial caso haja duvida.
 }
 \keyword{datasets}
