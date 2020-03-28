@@ -32,7 +32,7 @@ m = reseta_matriz(3)
 
 ui = fluidPage(
 
-numericInput("dim", "Qual È a dimens„o da matriz?",3),
+numericInput("dim", "Qual √© a dimen√ß√£o da matriz?",3),
 actionButton("button", "Update"),
 h4("Preencha a matriz: "),
 matrixInput(inputId = "matrix",value = m),
@@ -42,8 +42,8 @@ actionButton("button2", "Codigo"),
 verbatimTextOutput("texto")
 
 )
-  
-  
+
+
 
 
 server = function(input, output, session){
@@ -51,27 +51,27 @@ server = function(input, output, session){
 
     matriz = input$matrix
     rhandsontable(inverso(matriz))
-    
+
   })
-  
+
   observeEvent(input$button,{
     nrow = input$dim
     m = reseta_matriz(nrow)
     updateMatrixInput(session, "matrix", m)
-    
+
   })
-  
+
   observeEvent(input$button2,{
     output$texto = renderPrint({
-    
+
       codigo = paste0("matrix(c(",paste(inverso(input$matrix),collapse=", "),"),ncol = 3)")
       codigo
-      
+
 
     })
-    
+
   })
-  
+
 
 }
 
