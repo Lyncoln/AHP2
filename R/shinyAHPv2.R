@@ -74,7 +74,8 @@ cria_matriz = function(){
 
 
   }
-  viewer <- paneViewer(300)
+  #viewer <- paneViewer(300) # Aparece no Viewer
+  viewer = dialogViewer("icut", width = 800, height = 700) # Abre uma janela
   runGadget(ui, server, viewer = viewer)
 }
 
