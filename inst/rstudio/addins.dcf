@@ -1,0 +1,4 @@
+Name: Cria matriz
+Description: Abre o shiny de criar matriz inversa
+Binding: cria_matriz
+Interactive: true
