@@ -4,7 +4,8 @@
 \name{BD3}
 \alias{BD3}
 \title{BD3}
-\format{Lista com 13 matrizes de julgamento
+\format{
+Lista com 13 matrizes de julgamento
 
 [1] Matriz para comparacao dos criterios.
 
@@ -30,7 +31,8 @@
 
 [12] Matriz para comparacao das alternativas em luz do subcriterio compatibilidade.
 
-[13] Matriz para comparacao das alternativas em luz do subcriterio custo total de propriedade.}
+[13] Matriz para comparacao das alternativas em luz do subcriterio custo total de propriedade.
+}
 \source{
 BD3
 }

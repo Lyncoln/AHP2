@@ -4,7 +4,8 @@
 \name{BD1}
 \alias{BD1}
 \title{BD1}
-\format{Lista com 6 matrizes de julgamento
+\format{
+Lista com 6 matrizes de julgamento
 
 [1] Matriz para comparacao dos criterios.
 
@@ -16,7 +17,8 @@
 
 [5] Matriz para comparacao das alternativas em luz do criterio Revenda (RV).
 
-[6] Matriz para comparacao das alternativas em luz do criterio Manutencao (MA).}
+[6] Matriz para comparacao das alternativas em luz do criterio Manutencao (MA).
+}
 \source{
 BD1
 }

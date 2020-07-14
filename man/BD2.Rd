@@ -4,7 +4,8 @@
 \name{BD2}
 \alias{BD2}
 \title{BD2}
-\format{Lista com 5 matrizes de julgamento
+\format{
+Lista com 5 matrizes de julgamento
 
 [1] Matriz para comparacao dos criterios.
 
@@ -14,7 +15,8 @@
 
 [4] Matriz para comparacao das alternativas em luz do criterio Prestigio.
 
-[5] Matriz para comparacao das alternativas em luz do criterio Lazer.}
+[5] Matriz para comparacao das alternativas em luz do criterio Lazer.
+}
 \source{
 BD2
 }

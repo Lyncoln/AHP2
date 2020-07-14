@@ -10,13 +10,16 @@ Description: Aplica o metodo AHP de saaty em um conjunto de matrizes devidamente
 License: What license it uses
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 Imports: 
     formattable,
     dplyr,
     tibble,
     readxl,
-    tidyr
+    tidyr,
+    shiny,
+    rhandsontable,
+    shinyMatrix
 Suggests: 
     knitr,
     rmarkdown
