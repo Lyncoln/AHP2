@@ -1,3 +1,8 @@
+#'@import shiny
+#'@import shinyMatrix
+#'@import rhandsontable
+#'@import rlang
+
 library(shiny)
 library(shinyMatrix)
 library(rhandsontable)
